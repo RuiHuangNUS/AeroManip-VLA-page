@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AeroManip-VLA: Scalable Vision-Language-Action Learning for Aerial Manipulation</title>
+  <meta name="description" content="AeroManip-VLA: a GPU-parallel benchmark for scalable aerial manipulation data generation and VLA policy evaluation, with 80K+ RL-generated demonstrations.">
+  <meta property="og:title" content="AeroManip-VLA">
+  <meta property="og:description" content="Scalable Vision-Language-Action Learning for Aerial Manipulation with RL-Generated Demonstrations.">
+  <meta property="og:image" content="static/images/overview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚁</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<!-- ============================== NAV ============================== -->
+<nav class="topnav" id="topnav">
+  <div class="topnav-inner">
+    <a class="brand" href="#top">AeroManip<span>-VLA</span></a>
+    <div class="navlinks" id="navlinks">
+      <a href="#video">Video</a>
+      <a href="#overview">Overview</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#expert">Demos</a>
+      <a href="#rl">RL</a>
+      <a href="#dof3">3-DoF Arm</a>
+      <a href="#outdoor">Outdoor</a>
+      <a href="#annotation">Annotation</a>
+      <a href="#results">Results</a>
+      <a href="#scalability">Scalability</a>
+      <a href="#bibtex">BibTeX</a>
+    </div>
+    <button class="navtoggle" id="navtoggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- ============================== HERO ============================== -->
+<header class="hero" id="top">
+  <video class="hero-bg" autoplay muted loop playsinline poster="static/images/poster_hero.jpg">
+    <source src="static/videos/hero_bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-shade"></div>
+  <div class="hero-content">
+    <h1 class="title">AeroManip-VLA</h1>
+    <p class="subtitle">Scalable Vision-Language-Action Learning for Aerial Manipulation with RL-Generated Demonstrations</p>
+    <p class="authors">
+      <span>Rui Huang<sup>1</sup></span>
+      <span>Yanlin Mu<sup>2,1</sup></span>
+      <span>Lidong Li<sup>1</sup></span>
+      <span>Yucong Wang<sup>1</sup></span>
+      <span>Zichen Yan<sup>1</sup></span>
+      <span>Lin Zhao<sup>1</sup></span>
+    </p>
+    <p class="affil">
+      <span class="inst"><img src="static/images/logos/nus.svg" alt="NUS logo"><span><sup>1</sup>National University of Singapore</span></span>
+      <span class="inst"><img src="static/images/logos/bit.svg" alt="BIT logo"><span><sup>2</sup>Beijing Institute of Technology</span></span>
+    </p>
+
+    <div class="link-buttons">
+      <a class="btn" data-link="paper" href="#" target="_blank" rel="noopener"><svg class="arxiv-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3.8 3.2 10.9 12l-7.1 8.8h2.9L12.4 14l5 6.8h2.8L13.8 12l6.4-8.8h-2.8L12.4 10 7.3 3.2z"/></svg><span>arXiv</span></a>
+      <a class="btn" data-link="pdf" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i><span>Paper</span></a>
+      <a class="btn" data-link="github" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i><span>Code</span></a>
+      <a class="btn" data-link="dataset" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-database"></i><span>Dataset</span></a>
+      <a class="btn btn-yt" data-link="youtube" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i><span>YouTube</span></a>
+      <a class="btn btn-bili" data-link="bilibili" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-bilibili"></i><span>Bilibili</span></a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="container stats-grid">
+      <div class="stat"><div class="num" data-count="80" data-suffix="K+">80K+</div><div class="lbl">RL-generated demonstrations<br><small>no human teleoperation</small></div></div>
+      <div class="stat"><div class="num" data-count="5">5</div><div class="lbl">parameterized skills<br><small>Pick · Place · Nav<br>Open · Close</small></div></div>
+      <div class="stat"><div class="num" data-count="3900" data-suffix="+">3,900+</div><div class="lbl">parallel environments<br><small>on a single RTX 5090</small></div></div>
+      <div class="stat"><div class="num" data-count="5.4" data-decimals="1" data-suffix="&times;">5.4&times;</div><div class="lbl">throughput vs. AIR-VLA<br><small>at 41% of the GPU memory</small></div></div>
+      <div class="stat"><div class="num" data-count="4.2" data-decimals="1" data-suffix="&times;">4.2&times;</div><div class="lbl">faster picks with RL<br><small>3.8 s vs. 15.8 s (expert)</small></div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================== VIDEO ============================== -->
+<section class="section alt" id="video">
+  <div class="container narrow">
+    <p class="eyebrow">01 &middot; Video</p>
+    <h2 class="section-title">Full Demo Video</h2>
+    <p class="lead">All demonstrations on this page, compiled into one video.</p>
+    <div class="player-tabs" role="tablist">
+      <button class="ptab active" data-player="youtube"><i class="fa-brands fa-youtube"></i> YouTube</button>
+      <button class="ptab" data-player="bilibili"><i class="fa-brands fa-bilibili"></i> Bilibili</button>
+    </div>
+    <div class="embed-frame" id="embed-frame">
+      <!-- filled by static/js/main.js from SITE_CONFIG -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================== OVERVIEW ============================== -->
+<section class="section" id="overview">
+  <div class="container">
+    <div class="split">
+      <div class="split-text">
+        <p class="eyebrow">02 &middot; Overview</p>
+        <h2 class="section-title">Aerial VLA data at scale, without teleoperation</h2>
+        <p class="lead">AeroManip-VLA is a GPU-parallel benchmark for aerial manipulation. Reusable RL policies and expert task rules generate demonstrations automatically, while every rollout is annotated for task progress and flight safety.</p>
+      </div>
+      <div>
+        <div class="video-card"><span class="speed">2&times;</span><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_teaser.jpg" data-src="static/videos/teaser.mp4"></video></div>
+        <p class="video-caption">Aerial pick-and-place across diverse apartment scenes and objects.</p>
+      </div>
+    </div>
+
+    <figure class="figure zoomable">
+      <img src="static/images/overview.jpg" alt="Overview of the AeroManip-VLA framework" loading="lazy">
+      <figcaption><b>AeroManip-VLA at a glance.</b> (a) 80K+ RL-generated expert trajectories across apartment scenes and six task types. (b) A VLA backbone consumes three onboard views (FPV + two gripper cameras), a language instruction and proprioception, and outputs action chunks of <code>[v<sub>x</sub>, v<sub>y</sub>, v<sub>z</sub>, yaw, gripper]</code>. (c) Long-horizon aerial manipulation decomposed into approach, align, pick, navigate and place.</figcaption>
+    </figure>
+
+    <div class="contrib-grid">
+      <div class="contrib">
+        <div class="contrib-icon"><i class="fa-solid fa-microchip"></i></div>
+        <h3>GPU-parallel aerial VLA benchmark</h3>
+        <p>Massively parallel simulation with low-level, payload-aware flight and manipulation control, built on ManiSkill3 and ReplicaCAD.</p>
+      </div>
+      <div class="contrib">
+        <div class="contrib-icon"><i class="fa-solid fa-robot"></i></div>
+        <h3>Demonstrations without teleoperation</h3>
+        <p>Reusable RL policies combined with expert task rules generate data across randomized objects, scenes and initial poses, from basic skills to long-horizon tasks.</p>
+      </div>
+      <div class="contrib">
+        <div class="contrib-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <h3>Structured analysis &amp; baselines</h3>
+        <p>Automated event labeling and trajectory categorization expose task progress and safety failures; ACT, Diffusion Policy, &pi;<sub>0</sub> and &pi;<sub>0.5</sub> are benchmarked.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== BENCHMARK ============================== -->
+<section class="section alt" id="benchmark">
+  <div class="container">
+    <p class="eyebrow">03 &middot; Benchmark</p>
+    <h2 class="section-title">Benchmark Design</h2>
+    <p class="lead">Four task settings built from five parameterized skills &mdash; <span class="chip">Pick</span><span class="chip">Place</span><span class="chip">Open</span><span class="chip">Close</span><span class="chip">Nav</span> &mdash; executed continuously within a single episode, with grasping realized through simulated physical contact (no attachment or teleportation).</p>
+
+    <div class="task-grid">
+      <div class="task-card"><i class="fa-solid fa-couch"></i><h4>TidyHouse</h4><p>Object-specific Pick and Place for household rearrangement.</p></div>
+      <div class="task-card"><i class="fa-solid fa-basket-shopping"></i><h4>PrepareGroceries</h4><p>Pick and Place of grocery items for kitchen rearrangement.</p></div>
+      <div class="task-card"><i class="fa-solid fa-box"></i><h4>PackageDelivery</h4><p>Outdoor: pick a package from a vehicle, fly to the door, place it on a cabinet.</p></div>
+      <div class="task-card"><i class="fa-solid fa-route"></i><h4>LongHorizon<wbr>Rearrangement</h4><p>Long-range navigation, pick-and-place, and opening / closing cabinets and fridges.</p></div>
+    </div>
+
+    <div class="two-col">
+      <figure class="figure zoomable">
+        <img src="static/images/platforms.jpg" alt="Two aerial manipulation platforms" loading="lazy">
+        <figcaption><b>Two X500-based platforms</b>: a lightweight 1-DoF downward gripper (left) and a forward-reaching 3-DoF arm (right), both with UMI-style fingertips. Both share a <b>payload-aware low-level controller</b> and <b>PX4-style control allocation</b>, keeping the simulated flight stack close to real hardware for easy sim-to-real transfer.</figcaption>
+      </figure>
+      <figure class="figure zoomable">
+        <img src="static/images/observation.jpg" alt="Observation configuration" loading="lazy">
+        <figcaption><b>Observations</b>: one FPV and two gripper-mounted RGB-D cameras (128&times;128) plus a 19-D proprioceptive state. The third-person view is for visualization only.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== EXPERT DEMOS ============================== -->
+<section class="section" id="expert">
+  <div class="container">
+    <p class="eyebrow">04 &middot; Demonstrations</p>
+    <h2 class="section-title">Expert Demonstrations</h2>
+    <p class="lead">A privileged hybrid expert combines frozen learned components, rule-based guards, geometric planning and scripted feedback to produce reliable demonstrations in parallel environments. Each tile shows the third-person view (top), onboard RGB (middle) and depth (bottom).</p>
+
+    <div class="switcher" data-switcher>
+      <div class="switch-tabs">
+        <button class="stab active" data-src="static/videos/expert_pick.mp4" data-poster="static/images/poster_expert_pick.jpg" data-caption="Pick — descend onto the target object and grasp it through physical contact.">Pick</button>
+        <button class="stab" data-src="static/videos/expert_place.mp4" data-poster="static/images/poster_expert_place.jpg" data-caption="Place — carry the object to the goal region and release it stably.">Place</button>
+        <button class="stab" data-src="static/videos/expert_pick_nav_place.mp4" data-poster="static/images/poster_expert_pick_nav_place.jpg" data-caption="Pick → Navigate → Place — long-horizon transport between spatially separated regions.">Pick–Navigate–Place</button>
+      </div>
+      <div class="video-card wide">
+        <video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_expert_pick.jpg" data-src="static/videos/expert_pick.mp4"></video>
+      </div>
+      <p class="video-caption" data-caption-target>Pick — descend onto the target object and grasp it through physical contact.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== RL ============================== -->
+<section class="section alt" id="rl">
+  <div class="container">
+    <div class="split media-left">
+      <div class="stack">
+        <div>
+          <div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_rl_pick.jpg" data-src="static/videos/rl_pick.mp4"></video></div>
+          <p class="video-caption"><b>RL: Pick</b> (TidyHouse)</p>
+        </div>
+        <div>
+          <div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_rl_place.jpg" data-src="static/videos/rl_place.mp4"></video></div>
+          <p class="video-caption"><b>RL: Place</b> (TidyHouse)</p>
+        </div>
+      </div>
+      <div class="split-text">
+        <p class="eyebrow">05 &middot; Reinforcement Learning</p>
+        <h2 class="section-title">Extensive RL</h2>
+        <p class="lead">Skill policies are further optimized with PPO in GPU-parallel environments. RL costs far more interaction than behavior cloning, but discovers <b>more diverse</b> and <b>much faster</b> successful behaviors.</p>
+    <div class="finding-grid stacked">
+      <div class="finding">
+        <div class="finding-num">67–81k <span>vs.</span> millions</div>
+        <p>Demonstration transitions BC needs to approach expert Pick success, vs. environment interactions PPO needs.</p>
+      </div>
+      <div class="finding">
+        <div class="finding-num">283 <span>vs.</span> 46</div>
+        <p>Occupied spatial cells of successful PPO approach paths vs. the expert on PrepareGroceries (205 vs. 53 on TidyHouse).</p>
+      </div>
+      <div class="finding">
+        <div class="finding-num">3.8 s <span>vs.</span> 15.8 s</div>
+        <p>Mean time to a successful pick for PPO vs. the expert and BC on TidyHouse, mostly from a shorter approach.</p>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="fig-tabs" data-figtabs>
+      <div class="switch-tabs">
+        <button class="stab active" data-fig="0">Learning efficiency</button>
+        <button class="stab" data-fig="1">Trajectory diversity</button>
+        <button class="stab" data-fig="2">Execution time</button>
+      </div>
+      <figure class="figure zoomable fig-panel active">
+        <img src="static/images/learning_efficiency.png" alt="Learning efficiency of BC vs PPO" loading="lazy">
+        <figcaption><b>BC is substantially more interaction-efficient than PPO, but relies on expert demonstrations.</b> BC markers report held-out success after 1, 2, 4 and 8 collection rounds; PPO curves show training success from scratch; dotted lines denote the expert.</figcaption>
+      </figure>
+      <figure class="figure zoomable fig-panel">
+        <img src="static/images/trajectory_diversity.png" alt="Trajectory diversity" loading="lazy">
+        <figcaption><b>PPO produces substantially more diverse successful approach trajectories.</b> Expert and BC follow a near-deterministic L-shaped approach, whereas PPO spreads across the X–Z plane, with higher path deviation, space coverage and velocity-direction entropy.</figcaption>
+      </figure>
+      <figure class="figure zoomable fig-panel">
+        <img src="static/images/execution_time.png" alt="Execution time" loading="lazy">
+        <figcaption><b>PPO discovers diverse yet substantially faster trajectories.</b> Mean time to success decomposed into approach, align, grasp, lift and hold phases (left) and the distribution of successful episode lengths (right).</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== 3-DOF ============================== -->
+<section class="section" id="dof3">
+  <div class="container">
+    <p class="eyebrow">06 &middot; 3-DoF Arm</p>
+    <h2 class="section-title">Articulated &amp; Long-Horizon Tasks</h2>
+    <p class="lead">With a forward-reaching 3-DoF arm, the aerial manipulator opens and closes fridges and kitchen counters, and chains these interactions with pick, navigation and place in a single continuous episode.</p>
+
+    <h3 class="sub-title">Open &amp; Close</h3>
+    <div class="quad-grid">
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_open_fridge.jpg" data-src="static/videos/open_fridge.mp4"></video></div><p class="video-caption"><b>Open</b> fridge</p></div>
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_open_counter.jpg" data-src="static/videos/open_counter.mp4"></video></div><p class="video-caption"><b>Open</b> kitchen counter</p></div>
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_close_fridge.jpg" data-src="static/videos/close_fridge.mp4"></video></div><p class="video-caption"><b>Close</b> fridge</p></div>
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_close_counter.jpg" data-src="static/videos/close_counter.mp4"></video></div><p class="video-caption"><b>Close</b> kitchen counter</p></div>
+    </div>
+
+    <h3 class="sub-title">Open → Pick → Navigate → Place</h3>
+    <div class="portrait-grid">
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_opnp_drawer.jpg" data-src="static/videos/opnp_drawer.mp4"></video></div><p class="video-caption instr">&ldquo;Open the drawer, take out the bowl, and place it on the dark brown table.&rdquo;</p></div>
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_opnp_fridge.jpg" data-src="static/videos/opnp_fridge.mp4"></video></div><p class="video-caption instr">&ldquo;Open the fridge, take out the apple, and place it on the dark brown table in the living room.&rdquo;</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== OUTDOOR ============================== -->
+<section class="section dark" id="outdoor">
+  <div class="container">
+    <p class="eyebrow">07 &middot; Outdoor</p>
+    <h2 class="section-title">Package Delivery</h2>
+    <div class="steps">
+      <div class="step"><span>1</span>Pick the package from the van roof</div>
+      <i class="fa-solid fa-arrow-right-long step-arrow"></i>
+      <div class="step"><span>2</span>Fly to the designated house</div>
+      <i class="fa-solid fa-arrow-right-long step-arrow"></i>
+      <div class="step"><span>3</span>Place it on the porch table</div>
+    </div>
+    <div class="video-card wide"><span class="speed">4&times;</span><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_outdoor_delivery.jpg" data-src="static/videos/outdoor_delivery.mp4"></video></div>
+  </div>
+</section>
+
+<!-- ============================== ANNOTATION ============================== -->
+<section class="section" id="annotation">
+  <div class="container">
+    <p class="eyebrow">08 &middot; Annotation</p>
+    <h2 class="section-title">Event Annotation &amp; Failure Analysis</h2>
+    <p class="lead">Every rollout is labeled with task-specific interaction events and aerial safety constraints &mdash; excessive tilt, altitude violations, non-target contact, payload loss, platform stability and clearance &mdash; so success is judged jointly with the physics of flight, and failures are categorized rather than just counted.</p>
+
+    <div class="two-col">
+      <div>
+        <div class="video-card"><span class="speed">1.5&times;</span><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_success_check.jpg" data-src="static/videos/success_check.mp4"></video></div>
+        <p class="video-caption"><span class="tag ok"><i class="fa-solid fa-check"></i> Success</span> The released object comes to rest inside the goal region (green) with only mild contact.</p>
+      </div>
+      <div>
+        <div class="video-card"><span class="speed">1.5&times;</span><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_failure_check.jpg" data-src="static/videos/failure_check.mp4"></video></div>
+        <p class="video-caption"><span class="tag bad"><i class="fa-solid fa-xmark"></i> Failure</span> Cumulative contact force exceeds the limit after release &mdash; flagged as a release collision.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">Failure cases</h3>
+    <div class="triple-grid">
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_failure_pick.jpg" data-src="static/videos/failure_pick.mp4"></video></div><p class="video-caption">Pick &middot; tuna fish can</p></div>
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_failure_place.jpg" data-src="static/videos/failure_place.mp4"></video></div><p class="video-caption">Place &middot; bowl</p></div>
+      <div><div class="video-card"><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_failure_long.jpg" data-src="static/videos/failure_long.mp4"></video></div><p class="video-caption">Long pick-and-place &middot; tuna fish can</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== RESULTS ============================== -->
+<section class="section alt" id="results">
+  <div class="container">
+    <p class="eyebrow">09 &middot; Results</p>
+    <h2 class="section-title">Policy Benchmarking</h2>
+    <p class="lead">We evaluate visuomotor imitation learning (ACT, Diffusion Policy) and pretrained VLAs (&pi;<sub>0</sub>, &pi;<sub>0.5</sub>) on PrepareGroceries. Pretrained VLAs transfer best, yet <b>Place is consistently easier than Pick</b> &mdash; reliable aerial object acquisition remains the main bottleneck.</p>
+
+    <div class="bars">
+      <div class="bar-row"><span class="bar-name">ACT</span><div class="bar-track"><div class="bar" style="--v:29.5"></div></div><span class="bar-val">29.5%</span></div>
+      <div class="bar-row"><span class="bar-name">Diffusion Policy</span><div class="bar-track"><div class="bar" style="--v:33.9"></div></div><span class="bar-val">33.9%</span></div>
+      <div class="bar-row"><span class="bar-name">&pi;<sub>0</sub></span><div class="bar-track"><div class="bar vla" style="--v:38.9"></div></div><span class="bar-val">38.9%</span></div>
+      <div class="bar-row best"><span class="bar-name">&pi;<sub>0.5</sub></span><div class="bar-track"><div class="bar vla" style="--v:44.6"></div></div><span class="bar-val">44.6%</span></div>
+      <p class="bars-note">Mean success rate over all 16 Pick / Place &times; object combinations.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="results" id="results-table">
+        <thead>
+          <tr><th>Method</th><th>Skill</th><th>Master Chef Can</th><th>Sugar Box</th><th>Tomato Soup Can</th><th>Tuna Fish Can</th><th>Pudding Box</th><th>Gelatin Box</th><th>Potted Meat Can</th><th>Bowl</th><th>Mean S.R.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td rowspan="2" class="m">ACT</td><td>Pick</td><td>2.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>10.0</td><td>18.0</td><td rowspan="2" class="mean">29.5</td></tr>
+          <tr><td>Place</td><td>24.0</td><td>98.0</td><td>28.0</td><td>82.0</td><td>46.0</td><td>48.0</td><td>56.0</td><td>60.0</td></tr>
+          <tr><td rowspan="2" class="m">DP</td><td>Pick</td><td>4.0</td><td>2.0</td><td>6.0</td><td>4.0</td><td>2.0</td><td>2.0</td><td>2.0</td><td>6.0</td><td rowspan="2" class="mean">33.9</td></tr>
+          <tr><td>Place</td><td>50.0</td><td>90.0</td><td>50.0</td><td>78.0</td><td>82.0</td><td>80.0</td><td>32.0</td><td>52.0</td></tr>
+          <tr><td rowspan="2" class="m">&pi;<sub>0</sub></td><td>Pick</td><td>6.7</td><td>6.7</td><td>10.0</td><td>20.0</td><td>13.3</td><td>13.3</td><td>13.3</td><td>6.7</td><td rowspan="2" class="mean">38.9</td></tr>
+          <tr><td>Place</td><td>80.0</td><td>82.0</td><td>52.0</td><td>88.0</td><td>52.0</td><td>68.0</td><td>86.0</td><td>24.0</td></tr>
+          <tr><td rowspan="2" class="m">&pi;<sub>0.5</sub></td><td>Pick</td><td>8.0</td><td>6.0</td><td>6.0</td><td>12.0</td><td>14.0</td><td>16.0</td><td>16.0</td><td>14.0</td><td rowspan="2" class="mean best">44.6</td></tr>
+          <tr><td>Place</td><td>60.0</td><td>88.0</td><td>64.0</td><td>92.0</td><td>96.0</td><td>96.0</td><td>78.0</td><td>48.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Success rate (%) per skill–object pair on AeroManip-VLA PrepareGroceries. Cell shading encodes the value; bold marks the best method per column and skill.</p>
+  </div>
+</section>
+
+<!-- ============================== SCALABILITY ============================== -->
+<section class="section" id="scalability">
+  <div class="container">
+    <div class="split">
+      <div class="split-text">
+        <p class="eyebrow">10 &middot; Scalability</p>
+        <h2 class="section-title">Parallelized GPU Simulation &amp; Rendering</h2>
+        <p class="lead">Each free-flying airframe is modeled with six virtual joints, so thousands of aerial manipulators &mdash; physics at 240&nbsp;Hz, three onboard RGB-D cameras per step &mdash; run concurrently on one GPU.</p>
+        <div class="scal-stats">
+          <div class="sstat"><div class="num">1,707 <small>SPS</small></div><p>with 1,024 environments using 12.4&nbsp;GB</p></div>
+          <div class="sstat"><div class="num">&minus;86%</div><p>GPU memory vs. AIR-VLA at the same N&nbsp;=&nbsp;64 (4.4 vs. 30.5&nbsp;GB), with 1.6&times; throughput</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="video-card"><span class="speed">3&times;</span><video class="lazy-video" muted loop playsinline preload="none" poster="static/images/poster_gpu_parallel.jpg" data-src="static/videos/gpu_parallel.mp4"></video></div>
+        <p class="video-caption">From one aerial manipulator to a grid of parallel apartments on a single GPU.</p>
+      </div>
+    </div>
+
+    <figure class="figure zoomable throughput-fig">
+      <img src="static/images/throughput.png" alt="Throughput vs GPU memory" loading="lazy">
+      <figcaption><b>Simulation-and-rendering throughput vs. GPU memory</b> on an RTX 5090 (log scale). Point labels give the number of parallel environments. At their best configurations, AeroManip-VLA reaches 5.4&times; the throughput of AIR-VLA with 41% of its memory.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================== BIBTEX ============================== -->
+<section class="section alt" id="bibtex">
+  <div class="container narrow">
+    <h2 class="section-title">BibTeX</h2>
+    <div class="bibtex">
+      <button class="copy-btn" id="copy-bib"><i class="fa-regular fa-copy"></i> Copy</button>
+<pre id="bib-text">@article{huang2026aeromanipvla,
+  title   = {AeroManip-VLA: Scalable Vision-Language-Action Learning for
+             Aerial Manipulation with RL-Generated Demonstrations},
+  author  = {Huang, Rui and Mu, Yanlin and Li, Lidong and Wang, Yucong
+             and Yan, Zichen and Zhao, Lin},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>All videos are rendered in simulation.</p>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+  <img alt="">
+  <video controls loop muted playsinline></video>
+</div>
+
+<script src="static/js/main.js"></script>
+</body>
+</html>
