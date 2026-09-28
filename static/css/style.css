@@ -291,6 +291,37 @@ code { font-family: var(--mono); font-size: .88em; background: #f0f0ec; padding:
 .bar-row.best .bar-val { color: var(--accent); }
 .bars-note { font-size: 13.5px; color: var(--muted); text-align: center; margin: 8px 0 0; }
 
+/* "Your method" teaser bar */
+.bar-row.yours .bar-name { color: var(--accent); font-style: italic; }
+.bar-row.yours .bar-track { position: relative; background: transparent; border: 2px dashed #f0b27a; }
+.bar-row.yours .bar {
+  background: repeating-linear-gradient(-45deg, rgba(232,134,42,.55) 0 10px, rgba(232,134,42,.22) 10px 20px);
+  background-size: 28px 28px; animation: stripes 1.2s linear infinite;
+  -webkit-mask-image: linear-gradient(90deg, #000 70%, transparent);
+          mask-image: linear-gradient(90deg, #000 70%, transparent);
+}
+.bar-q { position: absolute; top: 50%; left: calc(62% + 8px); transform: translateY(-50%); font-weight: 800; color: var(--accent); font-size: 16px; }
+.bar-row.yours .bar-val { color: var(--accent); }
+@keyframes stripes { to { background-position: 28px 0; } }
+
+.challenge {
+  max-width: 860px; margin: 8px auto 44px; padding: 22px 26px; border-radius: var(--radius);
+  display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center;
+  background: linear-gradient(120deg, #fff7ef, #fff); border: 1px solid #f6d3b0; box-shadow: var(--shadow);
+}
+.challenge-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: var(--accent); color: #fff; font-size: 22px; }
+.challenge h3 { margin: 0 0 4px; font-size: 19px; letter-spacing: -.01em; }
+.challenge p { margin: 0; font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; }
+.challenge-actions { display: flex; flex-direction: column; gap: 8px; }
+.cbtn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; white-space: nowrap; border: 1px solid #f0b27a; color: #b35e12; background: #fff; transition: all .2s; }
+.cbtn:hover { text-decoration: none; background: var(--accent-soft); }
+.cbtn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.cbtn.primary:hover { background: #d4741c; }
+@media (max-width: 680px) {
+  .challenge { grid-template-columns: 1fr; text-align: left; }
+  .challenge-actions { flex-direction: row; flex-wrap: wrap; }
+}
+
 .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--line); background: #fff; box-shadow: var(--shadow); }
 table.results { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; min-width: 860px; }
 table.results th, table.results td { padding: 9px 10px; text-align: center; border-bottom: 1px solid #efefea; }

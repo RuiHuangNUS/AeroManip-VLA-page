@@ -8,6 +8,7 @@ const SITE_CONFIG = {
   pdf:      "https://arxiv.org/pdf/xxxx.xxxxx",                  // direct PDF (or OpenReview link)
   github:   "https://github.com/RuiHuangNUS/AeroManip-VLA",      // code repository
   dataset:  "https://huggingface.co/datasets/xxxx/AeroManip-VLA",// dataset page
+  submit:   "https://github.com/RuiHuangNUS/AeroManip-VLA/issues",// where people send leaderboard results
   youtube:  "https://www.youtube.com/watch?v=VIDEO_ID",          // full YouTube URL (or youtu.be/…)
   bilibili: "https://www.bilibili.com/video/BVxxxxxxxxxx",       // full Bilibili URL (BV id)
 };

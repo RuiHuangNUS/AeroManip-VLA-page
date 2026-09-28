@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/css/style.css?v=2">
 </head>
 <body>
 
@@ -77,7 +77,7 @@
       <div class="stat"><div class="num" data-count="80" data-suffix="K+">80K+</div><div class="lbl">RL-generated demonstrations<br><small>no human teleoperation</small></div></div>
       <div class="stat"><div class="num" data-count="5">5</div><div class="lbl">parameterized skills<br><small>Pick · Place · Nav<br>Open · Close</small></div></div>
       <div class="stat"><div class="num" data-count="3900" data-suffix="+">3,900+</div><div class="lbl">parallel environments<br><small>on a single RTX 5090</small></div></div>
-      <div class="stat"><div class="num" data-count="5.4" data-decimals="1" data-suffix="&times;">5.4&times;</div><div class="lbl">throughput vs. AIR-VLA<br><small>at 41% of the GPU memory</small></div></div>
+      <div class="stat"><div class="num" data-count="6.7" data-decimals="1" data-suffix="&times;">6.7&times;</div><div class="lbl">throughput vs. AIR-VLA<br><small>at comparable GPU memory</small></div></div>
       <div class="stat"><div class="num" data-count="4.2" data-decimals="1" data-suffix="&times;">4.2&times;</div><div class="lbl">faster picks with RL<br><small>3.8 s vs. 15.8 s (expert)</small></div></div>
     </div>
   </div>
@@ -324,7 +324,20 @@
       <div class="bar-row"><span class="bar-name">Diffusion Policy</span><div class="bar-track"><div class="bar" style="--v:33.9"></div></div><span class="bar-val">33.9%</span></div>
       <div class="bar-row"><span class="bar-name">&pi;<sub>0</sub></span><div class="bar-track"><div class="bar vla" style="--v:38.9"></div></div><span class="bar-val">38.9%</span></div>
       <div class="bar-row best"><span class="bar-name">&pi;<sub>0.5</sub></span><div class="bar-track"><div class="bar vla" style="--v:44.6"></div></div><span class="bar-val">44.6%</span></div>
+      <div class="bar-row yours"><span class="bar-name">Your method</span><div class="bar-track"><div class="bar" style="--v:62"></div><span class="bar-q">?</span></div><span class="bar-val">??%</span></div>
       <p class="bars-note">Mean success rate over all 16 Pick / Place &times; object combinations.</p>
+    </div>
+
+    <div class="challenge">
+      <div class="challenge-icon"><i class="fa-solid fa-trophy"></i></div>
+      <div class="challenge-text">
+        <h3>Can your policy beat &pi;<sub>0.5</sub>?</h3>
+        <p>Reliable aerial picking is still far from solved. Train and evaluate your method on the AeroManip-VLA dataset, and send us your results &mdash; we will add them to this leaderboard.</p>
+      </div>
+      <div class="challenge-actions">
+        <a class="cbtn primary" data-link="dataset" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-database"></i> Get the dataset</a>
+        <a class="cbtn" data-link="submit" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-paper-plane"></i> Submit results</a>
+      </div>
     </div>
 
     <div class="table-wrap">
@@ -357,7 +370,8 @@
         <h2 class="section-title">Parallelized GPU Simulation &amp; Rendering</h2>
         <p class="lead">Each free-flying airframe is modeled with six virtual joints, so thousands of aerial manipulators &mdash; physics at 240&nbsp;Hz, three onboard RGB-D cameras per step &mdash; run concurrently on one GPU.</p>
         <div class="scal-stats">
-          <div class="sstat"><div class="num">1,707 <small>SPS</small></div><p>with 1,024 environments using 12.4&nbsp;GB</p></div>
+          <div class="sstat"><div class="num">2,137 <small>SPS</small></div><p>with ~3,900 parallel environments using 32.7&nbsp;GB</p></div>
+          <div class="sstat"><div class="num">6.7&times;</div><p>throughput of AIR-VLA at comparable memory (317&nbsp;SPS with 64 environments, 30.5&nbsp;GB)</p></div>
           <div class="sstat"><div class="num">&minus;86%</div><p>GPU memory vs. AIR-VLA at the same N&nbsp;=&nbsp;64 (4.4 vs. 30.5&nbsp;GB), with 1.6&times; throughput</p></div>
         </div>
       </div>
@@ -369,7 +383,7 @@
 
     <figure class="figure zoomable throughput-fig">
       <img src="static/images/throughput.png" alt="Throughput vs GPU memory" loading="lazy">
-      <figcaption><b>Simulation-and-rendering throughput vs. GPU memory</b> on an RTX 5090 (log scale). Point labels give the number of parallel environments. At their best configurations, AeroManip-VLA reaches 5.4&times; the throughput of AIR-VLA with 41% of its memory.</figcaption>
+      <figcaption><b>Simulation-and-rendering throughput vs. GPU memory</b> on an RTX 5090 (log scale). Point labels give the number of parallel environments. AeroManip-VLA scales to ~3,900 environments (2,137&nbsp;SPS at 32.7&nbsp;GB), extending beyond AIR-VLA's last point (64 environments, 30.5&nbsp;GB); at comparable memory it achieves about 6.7&times; the throughput.</figcaption>
     </figure>
   </div>
 </section>
@@ -406,6 +420,6 @@
   <video controls loop muted playsinline></video>
 </div>
 
-<script src="static/js/main.js"></script>
+<script src="static/js/main.js?v=2"></script>
 </body>
 </html>
