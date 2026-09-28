@@ -54,7 +54,7 @@ code { font-family: var(--mono); font-size: .88em; background: #f0f0ec; padding:
 .brand { color: #fff; font-weight: 800; letter-spacing: -.01em; font-size: 17px; white-space: nowrap; }
 .brand span { color: var(--accent); }
 .brand { display: inline-flex; align-items: center; }
-.brand img { margin-right: 9px; border-radius: 7px; }
+.brand img { margin-right: 8px; }
 .brand:hover { text-decoration: none; }
 .navlinks { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
 .navlinks::-webkit-scrollbar { display: none; }

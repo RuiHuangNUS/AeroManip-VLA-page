@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- light variant for dark backgrounds (nav bar) -->
+  <ellipse cx="14" cy="9" rx="12" ry="3" fill="#e8862a"/>
+  <ellipse cx="50" cy="9" rx="12" ry="3" fill="#e8862a"/>
+  <rect x="12.3" y="9" width="3.4" height="9" rx="1.2" fill="#f4f4f2"/>
+  <rect x="48.3" y="9" width="3.4" height="9" rx="1.2" fill="#f4f4f2"/>
+  <rect x="4" y="16.5" width="56" height="5.5" rx="2.75" fill="#f4f4f2"/>
+  <rect x="22" y="13" width="20" height="11.5" rx="4" fill="#f4f4f2"/>
+  <rect x="30" y="24" width="4" height="12" rx="1.5" fill="#e8862a"/>
+  <path d="M21.5 37.5h21M23 37.5v11.5l4 3.5M41 37.5v11.5l-4 3.5" fill="none" stroke="#f4f4f2" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="26.6" y="41.5" width="10.8" height="11.5" rx="2" fill="#3b82f6"/>
+</svg>
