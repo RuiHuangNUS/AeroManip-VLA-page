@@ -53,6 +53,8 @@ code { font-family: var(--mono); font-size: .88em; background: #f0f0ec; padding:
 .topnav-inner { max-width: 1280px; margin: 0 auto; padding: 0 20px; height: 56px; display: flex; align-items: center; gap: 24px; }
 .brand { color: #fff; font-weight: 800; letter-spacing: -.01em; font-size: 17px; white-space: nowrap; }
 .brand span { color: var(--accent); }
+.brand { display: inline-flex; align-items: center; }
+.brand img { margin-right: 9px; border-radius: 7px; }
 .brand:hover { text-decoration: none; }
 .navlinks { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
 .navlinks::-webkit-scrollbar { display: none; }
