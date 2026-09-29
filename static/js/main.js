@@ -1,15 +1,14 @@
 /* ============================================================
    SITE CONFIG — edit the links here; nothing else needs changing.
    Leave a demo value (containing "xxxx" / "VIDEO_ID") and the
-   button shows a "soon" badge and the player shows a placeholder.
+   button is labelled "(coming soon)" and the player shows a placeholder.
    ============================================================ */
 const SITE_CONFIG = {
   paper:    "https://arxiv.org/abs/xxxx.xxxxx",                  // arXiv abstract page
-  pdf:      "https://arxiv.org/pdf/xxxx.xxxxx",                  // direct PDF (or OpenReview link)
   github:   "https://github.com/RuiHuangNUS/AeroManip-VLA",      // code repository
   dataset:  "https://huggingface.co/datasets/xxxx/AeroManip-VLA",// dataset page
   submit:   "https://github.com/RuiHuangNUS/AeroManip-VLA/issues",// where people send leaderboard results
-  youtube:  "https://www.youtube.com/watch?v=VIDEO_ID",          // full YouTube URL (or youtu.be/…)
+  youtube:  "https://youtu.be/1uljytfGFI4",                     // full YouTube URL (or youtu.be/…)
   bilibili: "https://www.bilibili.com/video/BVxxxxxxxxxx",       // full Bilibili URL (BV id)
 };
 
@@ -27,8 +26,12 @@ function bilibiliId(url) {
 /* ---------------- link buttons ---------------- */
 document.querySelectorAll("[data-link]").forEach((a) => {
   const url = SITE_CONFIG[a.dataset.link];
-  if (url) a.href = url;
-  if (isDemo(url)) a.classList.add("placeholder");
+  if (!isDemo(url)) { a.href = url; return; }
+  // no real link yet: label it and keep it from navigating anywhere
+  a.classList.add("placeholder");
+  a.removeAttribute("href");
+  a.setAttribute("aria-disabled", "true");
+  a.insertAdjacentHTML("beforeend", '<span class="soon">(coming soon)</span>');
 });
 
 /* ---------------- YouTube / Bilibili player ---------------- */
@@ -55,8 +58,7 @@ function showPlayer(kind) {
       <div class="embed-placeholder">
         <img src="static/images/poster_hero.jpg" alt="">
         <i class="fa-brands ${icon}"></i>
-        <p>${name} video coming soon</p>
-        <small>Set <code>SITE_CONFIG.${kind}</code> in static/js/main.js</small>
+        <p>${name} video (coming soon)</p>
       </div>`;
   }
 }

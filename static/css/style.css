@@ -115,6 +115,10 @@ code { font-family: var(--mono); font-size: .88em; background: #f0f0ec; padding:
 .btn:hover { background: #fff; color: var(--ink); text-decoration: none; transform: translateY(-2px); }
 .btn-yt:hover { background: #ff0033; color: #fff; border-color: #ff0033; }
 .btn-bili:hover { background: #00a1d6; color: #fff; border-color: #00a1d6; }
+.btn.placeholder, .cbtn.placeholder { cursor: default; opacity: .72; }
+.btn.placeholder:hover { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.22); transform: none; }
+.cbtn.placeholder:hover { background: var(--accent); }
+.soon { font-size: .82em; font-weight: 500; opacity: .8; margin-left: -2px; }
 
 .scroll-cue { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 2; color: rgba(255,255,255,.7); font-size: 20px; animation: bob 2s infinite; }
 @keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
