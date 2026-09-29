@@ -405,3 +405,5 @@ table.results td.top { font-weight: 800; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .scroll-cue { animation: none; }
 }
+
+.title-soon { font-size: .5em; font-weight: 600; color: var(--muted); letter-spacing: 0; vertical-align: middle; }
