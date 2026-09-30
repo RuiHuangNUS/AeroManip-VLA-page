@@ -4,7 +4,7 @@
    button is labelled "(coming soon)" and the player shows a placeholder.
    ============================================================ */
 const SITE_CONFIG = {
-  paper:    "https://arxiv.org/abs/xxxx.xxxxx",                  // arXiv abstract page
+  paper:    "https://arxiv.org/abs/2609.36915",                  // arXiv abstract page
   github:   "https://github.com/RuiHuangNUS/AeroManip-VLA",      // code repository
   dataset:  "https://huggingface.co/datasets/xxxx/AeroManip-VLA",// dataset page
   submit:   "https://github.com/RuiHuangNUS/AeroManip-VLA/issues",// where people send leaderboard results
