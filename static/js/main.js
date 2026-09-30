@@ -9,7 +9,7 @@ const SITE_CONFIG = {
   dataset:  "https://huggingface.co/datasets/xxxx/AeroManip-VLA",// dataset page
   submit:   "https://github.com/RuiHuangNUS/AeroManip-VLA/issues",// where people send leaderboard results
   youtube:  "https://youtu.be/1uljytfGFI4",                     // full YouTube URL (or youtu.be/…)
-  bilibili: "https://www.bilibili.com/video/BVxxxxxxxxxx",       // full Bilibili URL (BV id)
+  bilibili: "https://www.bilibili.com/video/BV18Qad6oEY7",       // full Bilibili URL (BV id)
 };
 
 const isDemo = (url) => !url || /xxxx|VIDEO_ID/i.test(url);
